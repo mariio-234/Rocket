@@ -27,13 +27,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/cart', function(){
     return 'Creacion del carrito';
-    log::debug('Creamos el carrito.');
+    log::debug('POST /cart Creamos el carrito.');
 });
 
 
 //GET Recuperacion del carrito
 Route::get('/cart/{id}', function($id){
     return 'Recuperacion del carrito' .$id;
+    log::debug('GET /cart/{id} Recuperacion del carrito.');
 });
 
 //POST Añadir producto al carrito
@@ -45,17 +46,19 @@ Route::post('/cart/{id}/product', function($id){
 
 //PUT Quitar un producto del carrito
 
-Route::put('/cart/{id}/line{id_line}', function($id, $idline){
+Route::put('/cart/{id}/product', function($id){
+    return 'Añadir un producto al carrito' .$id;
+
+});
+
+
+//DELETE Borrar un producto del carrito
+
+Route::delete('/cart/{id}/line{id_line}', function($id, $idline){
     return 'Quitar un producto del carrito' .$id . $idline;
 
 });
 
-//DELETE Borrar un producto del carrito
-
-Route::delete('/cart/{id}/coupon', function($id){
-
-    return 'Borrar producto de carrito' .$id;
-});
 
 //POST Añadir un cupon
 
@@ -100,7 +103,7 @@ Route::post('/user/register', function(){
 
 //ACTUALIZAR USUARIO
 
-Route::put('user/{id}', function($id){
+Route::put('/user/{id}', function($id){
     return 'Actualizacion de usuario'. $id;
 
 });
@@ -190,7 +193,7 @@ Route::get('/model/{id}/comment', function($id){
 });
 
 //POST Creacion de comentarios
-Route::post('/model/{id}/comments', function($id){
+Route::post('/model/{id}/comment', function($id){
 
     return 'Creacion de un comentario'. $id;
 });
