@@ -15,16 +15,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected static function booted(){
-        static::addGlobalScope( new ActiveAndNewsletter);
-    }
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = [
+    public $fillable = [
         'name',
         'email',
         'password',
@@ -47,7 +43,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'sex' => Sex::class
     ];
 
 
@@ -58,10 +53,6 @@ class User extends Authenticatable
 
     public function comments() {
         return $this->hasMany(Comment::class);
-    }
-
-    public function scopeActiveWithNewsletter($query){
-        $query->where('active', true) -> where('newsletter', true);
     }
 
 }

@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\ProductController;
-use App\Models\User;
-use Illuminate\Support\Facades\Mail;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,35 +14,7 @@ use Illuminate\Support\Facades\Mail;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return ['Laravel' => app()->version()];
 });
 
-Route::get('/product', [ProductController::class, 'index']);
-
-Route::get('/product/create', [ProductController::class, 'create']);
-
-Route::get('/product/{id}', [ProductController::class, 'show']);
-
-Route::post('/product', [ProductController::class, 'store']);
-
-Route::put('/product/{id}', [ProductController::class, 'update']);
-
-Route::delete('/product/{id}', [ProductController::class, 'delete']);
-
-Route::get('product/{id}/edit', [ProductController::class, 'edit']);
-
-
-
-Route::get('/', function(){
-    
-});
-
-Route::get('mailable/', function(){
-    $user= \App\Models\User::query()->first();
-   // Mail::to('mvp50@alu.ua.es') -> send(new \App\Mail\EmailBajaUser($user));
-    return new App\Mail\EmailBajaUser($user);
-});
-
-
-
-
+require __DIR__.'/auth.php';
