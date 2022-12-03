@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProductController;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,15 @@ Route::get('product/{id}/edit', [ProductController::class, 'edit']);
 
 
 
+Route::get('/', function(){
+    
+});
+
+Route::get('mailable/', function(){
+    $user= \App\Models\User::query()->first();
+   // Mail::to('mvp50@alu.ua.es') -> send(new \App\Mail\EmailBajaUser($user));
+    return new App\Mail\EmailBajaUser($user);
+});
 
 
 
