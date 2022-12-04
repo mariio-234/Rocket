@@ -13,6 +13,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ModelController;
 use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -317,7 +318,6 @@ Route::get('/menu', [MenuController::class, 'getMenus']);
 });
 */
 Route::get('/menu/{id}', [MenuController::class, 'getMenu']);
-
 
 
 

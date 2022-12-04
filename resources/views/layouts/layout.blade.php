@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="container">
-            <@yield('container')
+            @yield('container')
         </div>
     </body>
 </html>

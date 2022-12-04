@@ -16,8 +16,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
+        //return response()->json($products);
 
-        return view('listProducts', $products);
+        return view('listProducts',compact('products'));
     }
 
     /**
@@ -38,7 +39,25 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $request-> validate([
+            'sku' => 'required | max:10',
+            'size' => 'required | max:4',
+            'model_id' => 'required |max:1',
+        ]);
+
+        $sku= $request->sku;
+        $size= $request->size;
+        $model_id= $request->model_id;
+        $active = $request->active;
+
+        Product::create([
+            "sku" =>$sku,
+            "size"=>$size,
+            "model_id"=>$model_id,
+            "active" =>$active
+        ]);
+
+        return redirect()->route('product.index');
     }
 
     /**
@@ -49,7 +68,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product=Product::find($id);
+        $product=Product::findorfail($id);
         return view('listProduct', $product);
 
     }
@@ -62,7 +81,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return view('editProducts');
+
+        $product=Product::findorfail($id);
+        return view('editProducts', $product);
     }
 
     /**
@@ -74,7 +95,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request-> validate([
+            'sku' => 'required | max:10',
+            'size' => 'required | max:4',
+            'model_id' => 'required |max:1',
+        ]);
+
+        $product = Product::findorfail($id);
+        $product->sku = $request->input('sku');
+        $product->size = $request->input('size');
+        $product->model_id=$request->input('model_id');
+        $product->active=$request->input('active');
+
+        $product->save();
+        return redirect()->route('product.index');
     }
 
     /**
@@ -85,6 +119,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $res=Product::findorfail($id);
+        $res->delete();
+        //return response()->json($res);
+        return redirect()->route('product.index');
     }
 }

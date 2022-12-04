@@ -1,20 +1,39 @@
-@extends('layout')
+@extends('layouts.layout')
 
-    @section('title', 'Edición de productos')
+@section('title', 'Edición de productos')
     
 @section('container')
 
-    <form>
-    <h1> FORMULARIO DE EDICION DE PRODUCTOS </h1>
-
+<form action="{{route('product.update', [$id])}}" method="POST">
     @csrf
+    @method('PUT')
+    <h1> FORMULARIO DE EDICIÓN DE PRODUCTOS </h1>
+
+     @if ($errors->any())
+        <ul>
+            @foreach ( $errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+
         <div class="form-group">
-            <label for="nombre">SKU del producto</label>
-                <input type="text" class="form-control" id="nombre" placeholder="Nombre del producto">
+            <label for="sku">SKU del producto</label>
+                <input type="text" class="form-control" id="sku" name="sku" placeholder="SKU del producto" value={{$sku}}>
         </div>
         <div class="form-group">
             <label for="size">Talla</label>
-                <input type="text" class="form-control" id="talla" placeholder="Talla del producto">
+                <input type="text" class="form-control" id="size" name="size" placeholder="Talla del producto" value={{$size}}>
+        </div>
+
+        <div class="form-group">
+            <label for="model_id">id del modelo</label>
+                <input type="number" class="form-control" id="model_id" name="model_id" placeholder="Identificador del modelo" value={{$model_id}}>
+        </div>
+
+        <div class="form-group">
+            <label for="active">Activo</label>
+                <input type="checkbox" class="form-control" id="active" name="active" value={{$active}}>
         </div>
  
         <button type="submit" class="btn btn-primary">Enviar</button>
