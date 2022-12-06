@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\User;
+
 class UserController extends Controller
 {
     public function doLoginUser(){
@@ -12,6 +14,15 @@ class UserController extends Controller
 
     public function createUser(){
         return response()->json('Crear un usuario');
+    }
+
+    public function getUsersWithNewsletter(){
+        return response()->json(User::ActiveWithNewsletter()->get());
+    }
+
+    public function getUserById($id){
+        $datos=User::find($id);
+        return response()->json($datos);
     }
 
     public function updateUser($id){

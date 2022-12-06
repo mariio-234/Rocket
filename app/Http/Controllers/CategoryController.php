@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\Category; 
 
+use App\Models\TheModel;
+use App\Models\Product;
+
 class CategoryController extends Controller
 {
     public function getCategoryById($id){
@@ -18,5 +21,9 @@ class CategoryController extends Controller
 
         //LA MOSTRAMOS EN JSON
         return response()->json($datos);
+    }
+
+    public function getCategoryEachProduct(){
+        return response()->json(Category::with('model.products')->paginate(10));
     }
 }

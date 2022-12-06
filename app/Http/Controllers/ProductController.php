@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Models\Product; 
 
+use App\Models\Stock;
+
+use App\Models\TheModel;
+
 class ProductController extends Controller
 {
     /**
@@ -124,4 +128,12 @@ class ProductController extends Controller
         //return response()->json($res);
         return redirect()->route('product.index');
     }
+
+   public function getListTrendsProducts(){
+    return response()->json(Product::ListTrendsProducts()->get());
+   }
+
+   
+
+
 }

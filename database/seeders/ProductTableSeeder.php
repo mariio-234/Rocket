@@ -16,6 +16,7 @@ class ProductTableSeeder extends Seeder
     public function run()
     {
         DB::table('products')->delete();
+        
         DB::table('products')->insert([
             'sku' => 'a23432',
             'active' =>'true',

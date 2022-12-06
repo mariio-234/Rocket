@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\TheModel;
+use App\Models\Product;
+
 class ModelController extends Controller
 {
     public function getModelById($id){
@@ -17,4 +20,8 @@ class ModelController extends Controller
     public function createCommentsByModel($id){
         return response()->json('Creacion de un comentario del modelo'. $id);
     }
+
+    public function getProducts(){
+        return response()->json(TheModel::with('products.stock', 'products.rates')->limit(10)->get());
+       }
 }
