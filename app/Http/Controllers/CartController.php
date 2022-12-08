@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CartResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\Cart;
 
 class CartController extends Controller
 {
@@ -11,7 +13,7 @@ class CartController extends Controller
         log::debug('GET /cart Recuperacion del carrito.');
 
         
-        return response()->json('Recuperacion del carrito' .$id);
+        return new CartResource(Cart::findOrFail($id));
         
     }
 

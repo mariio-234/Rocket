@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CartLineController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ModelController;
 use App\Http\Controllers\NewsLetterController;
@@ -37,6 +39,10 @@ Route::get('/order',[OrderController::class, 'getPaidOrders']);
 Route::get('/newsletter',[NewsLetterController::class, 'ActiveNewsletterEachSex']);
 
 Route::get('/categoryEachProduct', [CategoryController::class, 'getCategoryEachProduct']);
+
+Route::get('/cartline/{id}/cart', [CartLineController::class, 'getCartLineByIdCart']);
+
+Route::get('/cartline/cart', [CartLineController::class, 'getCartLineCart']);
 
 
 

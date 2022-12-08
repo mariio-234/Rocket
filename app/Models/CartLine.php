@@ -8,7 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class CartLine extends Model
 {
     use HasFactory;
-    protected $table = 'cart-lines';
+    protected $table = 'cart_lines';
+
+    protected $fillabe =[
+        'id',
+        'uuid',
+        'active',
+        'cart_id',
+        'product_id',
+        'units',
+
+    ];
 
     public function cart(){
         return $this-> belongsTo( Cart::class );

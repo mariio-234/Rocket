@@ -9,8 +9,19 @@ class Cart extends Model
 {
     use HasFactory;
 
-    public function cartline(){
-        return $this-> hasMany( Cart::class );
+    protected $table='carts';
+
+    protected $fillable=[
+        'id',
+        'uuid',
+        'active',
+        'order_id',
+        'user_id'
+
+    ];
+
+    public function lines(){
+        return $this->hasMany(CartLine::class);
     }
 
     public function coupon(){
