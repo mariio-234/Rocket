@@ -6,14 +6,14 @@ use App\Http\Resources\CartResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Cart;
+use App\Models\CartLine;
 
 class CartController extends Controller
 {
     public function getCartbyId($id) {
         log::debug('GET /cart Recuperacion del carrito.');
-
-        
-        return new CartResource(Cart::findOrFail($id));
+        //return response()->json(Cart::findorfail($id)->with('cart_lines')->get());
+        return new CartResource(Cart::findorfail($id));
         
     }
 

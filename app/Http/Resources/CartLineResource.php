@@ -21,7 +21,6 @@ class CartLineResource extends JsonResource
             'id' => $this->id,
             'uuid' => $this->uuid,
             'active' => $this->active,
-            'cart_id' =>  new CartResource(Cart::findorfail($this->cart_id)),
             'units' => $this->units,
             'total_price' => $this->total_price,
             'total_price_per_unit' => $this->total_price_per_unit,

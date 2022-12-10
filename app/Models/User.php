@@ -43,6 +43,10 @@ class User extends Authenticatable
         'sex' => Sexuser::class
     ];
 
+    protected $observers = [
+        User::class => [UserObserver::class],
+    ];
+
 
     public function favorites() {
         

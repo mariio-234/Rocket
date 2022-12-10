@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\CartLine;
 
 class Cart extends Model
 {
@@ -11,16 +12,17 @@ class Cart extends Model
 
     protected $table='carts';
 
-    protected $fillable=[
+    /*protected $fillable=[
         'id',
         'uuid',
         'active',
         'order_id',
-        'user_id'
+        'user_id',
 
     ];
+    */
 
-    public function lines(){
+    public function cart_lines(){
         return $this->hasMany(CartLine::class);
     }
 

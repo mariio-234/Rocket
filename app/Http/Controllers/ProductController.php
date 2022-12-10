@@ -10,6 +10,10 @@ use App\Models\Stock;
 
 use App\Models\TheModel;
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
+
 class ProductController extends Controller
 {
     /**
@@ -19,8 +23,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        //$products = Product::all();
         //return response()->json($products);
+        if(Cache::has('product')){
+            $products = Cache::get('product');
+        }
+        else{
+            $products = Product::all();
+            Cache::put('product', $products, 10);
+        }
+        
 
         return view('listProducts',compact('products'));
     }
@@ -72,8 +84,16 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+        $redis = Redis::connection();
+        if (!$redis->exists('productView')){
+        Redis::set('productView', '1', 'EX', 86400);
+        }
+        else{
+            $redis->incr('productView',1);
+        }
         $product=Product::findorfail($id);
         return view('listProduct', $product);
+       
 
     }
 

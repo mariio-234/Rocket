@@ -25,9 +25,8 @@ class UserObserver
      */
     public function updated(User $user)
     {
-        if($user->baja){
-            var_dump('El cliente se ha dado de baja');
-        }
+        
+    $user->notify(new UserUpdated($user));
     }
 
     /**
