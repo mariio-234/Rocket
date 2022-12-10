@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\OrderObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,4 +16,8 @@ class Order extends Model
         return $query->where('paid',true)->groupby('status','id');
 
     }
+
+    protected $observers = [
+        OrderObserver::class => [OrderObserver::class],
+    ];
 }

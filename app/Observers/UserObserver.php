@@ -2,8 +2,9 @@
 
 namespace App\Observers;
 
+use App\Events\UserBaja;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Log;
 class UserObserver
 {
     /**
@@ -25,8 +26,12 @@ class UserObserver
      */
     public function updated(User $user)
     {
+        log::debug('llego');
+        if($user->baja){
+            UserBaja::dispatch($user);
+           //event(new UserBaja());
+        }
         
-    $user->notify(new UserUpdated($user));
     }
 
     /**

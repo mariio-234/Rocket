@@ -2,6 +2,8 @@
 
 namespace App\Observers;
 
+use App\Events\OrderPaid;
+use App\Events\OrderStatus;
 use App\Models\Order;
 
 class OrderObserver
@@ -25,6 +27,12 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
+        if($order->paid){
+            OrderPaid::dispatch($order);
+        }
+        if($order->status == 2){
+            OrderStatus::dispatch($order);
+        }
         
     }
 

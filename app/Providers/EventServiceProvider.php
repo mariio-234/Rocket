@@ -2,12 +2,20 @@
 
 namespace App\Providers;
 
+use App\Events\OrderPaid;
+use App\Events\OrderStatus;
+use App\Events\UserBaja;
+use App\Listeners\SendOrderPaidNotification;
+use App\Listeners\SendOrderStatusNotification;
+use App\Listeners\SendUserBajaNotification;
+use App\Models\Order;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use App\Observers\UserObserver;
 use App\Models\User;
+use App\Observers\OrderObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,6 +28,23 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        UserBaja::class => [
+            SendUserBajaNotification::class,
+        ],
+
+        OrderPaid::class => [
+            SendOrderPaidNotification::class,
+        ],
+
+        OrderStatus::class => [
+            SendOrderStatusNotification::class,
+        ],
+    ];
+
+    protected $observers = [
+        User::class => [UserObserver::class],
+        Order::class => [OrderObserver::class],
     ];
 
     /**
@@ -29,7 +54,8 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        User::observe(UserObserver::class);
+        
+        
     }
 
     /**

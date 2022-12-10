@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -26,7 +27,18 @@ class UserController extends Controller
     }
 
     public function updateUser($id){
-        return response()->json('Actualizar el usuario'. $id);
+        $user = User::find($id);
+        $user->baja = true;
+        $user->save();
+        return response()->json('fgfdgfg'.$id);
+    }
+
+    public function Update($id){
+        log::debug('Actualizar usuario');
+        $user = User::find($id);
+        $user->baja = true;
+        $user->save();
+        return response()->json(User::find($id));
     }
 
     public function removeUser($id){
