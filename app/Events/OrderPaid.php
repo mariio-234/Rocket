@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 
 class OrderPaid
 {
+    public Order $order;
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
@@ -19,9 +21,9 @@ class OrderPaid
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-        //
+        $this->order=$order;
     }
 
     /**
