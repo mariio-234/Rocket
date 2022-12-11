@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -12,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 
 class UserBaja
 {
+    public User $user;
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
@@ -19,9 +21,9 @@ class UserBaja
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user)
     {
-        //
+        $this->user=$user;
     }
 
     /**

@@ -9,9 +9,11 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Order;
 
 class OrderStatus
 {
+    public Order $user;
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
@@ -19,9 +21,9 @@ class OrderStatus
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-        //
+        $this->order=$order;
     }
 
     /**

@@ -6,6 +6,8 @@ use App\Events\OrderStatus;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailStatus;
 
 class SendOrderStatusNotification
 {
@@ -27,6 +29,6 @@ class SendOrderStatusNotification
      */
     public function handle(OrderStatus $event)
     {
-        log::debug('HA CAMBIADO EL ESTADO');
+        Mail::to('mariotecnologia2011@gmail.com')->send(new EmailStatus($event->order));
     }
 }

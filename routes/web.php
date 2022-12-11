@@ -8,12 +8,15 @@ use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Mail\EmailBaja;
+use App\Mail\EmailStatus;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\Route;
 
 use App\Models\User;
+use App\Mail\EmailPaid;
 
 
 /*
@@ -74,3 +77,25 @@ Route::get('/categoryEachProduct', [CategoryController::class, 'getCategoryEachP
 Route::get('/cartline/{id}/cart', [CartLineController::class, 'getCartLineByIdCart']);
 
 Route::get('/cartline/cart', [CartLineController::class, 'getCartLineCart']);
+
+
+Route::get('mailable/', function(){
+    $user= User::query()->first();
+   // Mail::to('mvp50@alu.ua.es') -> send(new \App\Mail\EmailBajaUser($user));
+    return new EmailBaja($user);
+});
+
+Route::get('mailable/status', function(){
+    $order= Order::query()->first();
+   // Mail::to('mvp50@alu.ua.es') -> send(new \App\Mail\EmailBajaUser($user));
+    return new EmailStatus($order);
+});
+
+Route::get('mailable/paid', function(){
+    $order= Order::query()->first();
+   // Mail::to('mvp50@alu.ua.es') -> send(new \App\Mail\EmailBajaUser($user));
+    return new EmailPaid($order);
+});
+
+
+

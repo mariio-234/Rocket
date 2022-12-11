@@ -3,9 +3,11 @@
 namespace App\Listeners;
 
 use App\Events\UserBaja;
+use App\Mail\EmailBaja;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class SendUserBajaNotification
 {
@@ -27,6 +29,6 @@ class SendUserBajaNotification
      */
     public function handle(UserBaja $event)
     {
-        log::debug('HAS DADO DE BAJA EL USUARIO');
+        Mail::to($event->user->email)->send(new EmailBaja ($event->user));
     }
 }
