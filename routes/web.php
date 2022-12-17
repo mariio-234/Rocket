@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartLineController;
 use App\Http\Controllers\CategoryController;
@@ -13,11 +14,12 @@ use App\Mail\EmailStatus;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
-use Illuminate\Support\Facades\Route;
-
 use App\Models\User;
 use App\Mail\EmailPaid;
-
+use App\Services\Paypal;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,13 @@ use App\Mail\EmailPaid;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function () {
+    return ['Laravel' => app()->version()];
+});
+
+require __DIR__.'/auth.php';
+
 
 Route::get('/userbaja/{id}', function ($id) {
     log::debug('Actualizar usuario');
@@ -54,9 +63,6 @@ Route::get('/status/{id}', function ($id) {
     return $orderStatus;
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::resource('product', ProductController::class);
 
 Route::get('/model/products/stock/rates', [ModelController::class, 'getProducts']);
@@ -97,5 +103,30 @@ Route::get('mailable/paid', function(){
     return new EmailPaid($order);
 });
 
+Route::get('/paypal', function(){
+   $paypal= new Paypal();
+   $ngrok ='https://f019-85-52-230-66.eu.ngrok.io';
+   $invoice = \Illuminate\Support\Str::random();
+   $total = 10.00;
+   $return = $ngrok. '/return';
+   $cancel= $ngrok. '/cancel';
+   return $paypal->createOrder($invoice, $total, $return, $cancel);
+   $id=data_get($result, 'id');
+   Cache::put('order_paypal', $id);
+   $url = $result['links'][1]['href'];
+   return Redirect::to($url);
 
 
+});
+
+Route::get('/return', function(Request $request){
+
+    $token = $request->get('token');
+    $paypal = new Paypal();
+    return $paypal ->confirmOrder($token);
+
+});
+
+Route::get('/cancel', function(Request $request){
+
+});

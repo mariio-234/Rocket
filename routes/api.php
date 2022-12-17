@@ -14,7 +14,6 @@ use App\Http\Controllers\ModelController;
 use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,6 +25,9 @@ use App\Http\Controllers\ProductController;
 |
 */
 
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+    return $request->user();
+});
 //---------------------------------------------------------------------------
                             // CARRITO
 //----------------------------------------------------------------------------
@@ -318,11 +320,3 @@ Route::get('/menu', [MenuController::class, 'getMenus']);
 });
 */
 Route::get('/menu/{id}', [MenuController::class, 'getMenu']);
-
-
-
-
-
-
-
-
